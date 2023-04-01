@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/create_style.css') }}">
+    </head>
+    <body>
+        <div class="login-page">
+            <div class="form">
+              <center><h1 style="color:rgb(194, 111, 176);">Create Account</h1></center>
+              <form action="/create_account" class="login-form" method="POST">
+                <input type="text" name="username" placeholder="name"/>
+                
+
+                <input type="password" name="password" placeholder="password"/>
+                
+                <input type="text" name="first_name" placeholder="name"/>
+
+                <input type="text" name="last_name" placeholder="last_name"/>
+
+                <input type="text" name="phone_number" placeholder="phone_number"/>
+
+                <input type="text" name="age" placeholder="age"/>
+
+                <input type="text" name="gender" placeholder="gender"/>
+
+                <input type="text" name="email_id" placeholder="email_id"/>
+
+                <input type="text" name="hint" placeholder="hint"/>
+
+                <input type="text" name="languages_known" placeholder="languages_known"/>
+
+                <button type="submit" name="button">Create Account</button>
+                <p class="message">Already registered? <a href="/">Sign In</a></p>
+              </form>
+            </div>
+          </div>
+    </body>
+</html>
