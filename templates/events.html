@@ -16,9 +16,9 @@
 		<label class="logo">Events Connect</label>
 		<ul>
 			<li><a class="active" href="/events">Events</a></li>
-			<li><a href="/carpooling?user_id={{ user_id }}">Carpooling</a></li>
-			<li><a href="/messaging?user_id={{ user_id }}">Messaging</a></li>
-			<li><a href="/profile?user_id={{ user_id }}">Profile</a></li>
+			<li><a href="/carpooling">Carpooling</a></li>
+			<li><a href="/messaging">Messaging</a></li>
+			<li><a href="/profile">Profile</a></li>
 		</ul>
 	</nav>
 
@@ -26,8 +26,7 @@
 		<h1>Events</h1>
 		<!-- add your dashboard content here -->
 		<h1>Welcome, {{ name }}</h1>
-
-
+        <h1> Events: {{ event_list|safe }}</h1>
 	</div>
 
 </body>
