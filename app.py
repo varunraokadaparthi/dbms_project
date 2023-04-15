@@ -9,7 +9,10 @@ from routes.messaging import messaging_bp
 from routes.profile import profile_bp
 from flask import Flask, render_template, request, redirect, url_for
 
+
 app = Flask(__name__)
+app.secret_key = 'ajaysaivarun'.encode("utf-8")
+
 app.register_blueprint(index_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(create_account_bp)

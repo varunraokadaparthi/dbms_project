@@ -9,6 +9,3 @@ db = pymysql.connect(
   charset='utf8mb4',
   cursorclass=pymysql.cursors.DictCursor
 )
-
-# create a cursor object
-cursor = db.cursor()
