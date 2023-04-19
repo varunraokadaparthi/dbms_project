@@ -55,6 +55,8 @@ def event():
         cursor.execute(query2, user_id)
         host = cursor.fetchone()
         host_name = host.get("first_name") + " " + host.get("last_name")
+
+
     return render_template("event.html", event=event, host_name=host_name,
                            already_registered=already_registered)
 

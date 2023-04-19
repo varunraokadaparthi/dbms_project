@@ -31,11 +31,39 @@
     <h1>CarPooling</h1>
     <!-- add your dashboard content here -->
     <ul class="list-group list-group-flush">
-        {% for carpool in carpool_list %}
         <li class="list-group-item">
-            Host: {{ username }}
-            <a class="btn btn-success" href="/carpool_join?carpool_id={{ carpool.id }}event_id={{ event_id }}">Join Ride</a>
+            <a href="/event?event_id={{ event_id }}">{{ event_name }}</a>
         </li>
+        <a href="/carpool_create?event_id={{ event_id }}">
+            <button type="button" class="btn btn-success btn-lg btn-block">Create Ride</button>
+        </a>
+        <table>
+            <thead>
+            <tr>
+                <th> Host</th>
+                <th> Phone No</th>
+                <th> Zip Code</th>
+                <th> Vehicle Type</th>
+                <th> Fee</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for carpool in carpool_list %}
+                <li class="list-group-item">
+                    <tr>
+                        <td>{{ carpool.user_name }}</td>
+                        <td>{{ carpool.phone_number }}</td>
+                        <td>{{ carpool.pickup_zipcode }}</td>
+                        <td>{{ carpool.vehicle_type }}</td>
+                        <td>{{ carpool.price }}</td>
+                        <td>
+                            <a class="btn btn-success" href="/carpool_join?carpool_id={{ carpool.id }}">Join Ride</a>
+                        </td>
+                    </tr>
+                </li>
+            {% endfor %}
+            </tbody>
+        </table>
     </ul>
 </div>
 
