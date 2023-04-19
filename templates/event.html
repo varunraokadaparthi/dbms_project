@@ -58,7 +58,7 @@
         if (variable == "True") {
             content = '<h1>Already Registered</h1>' +
                 '<br>' +
-                '<a class="btn btn-outline-dark" href="/carpooling?event_id={{ event.event_id }}">Carpool</a>'
+                '<a class="btn btn-outline-dark" href="/carpooling_event/{{ event.event_id }}">Carpool</a>'
         } else {
             content =
                 '<a class="btn btn-outline-dark" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>';
