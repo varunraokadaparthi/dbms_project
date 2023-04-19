@@ -7,10 +7,29 @@ profile_bp = Blueprint("profile_bp", __name__)
 @profile_bp.route("/profile")
 def profile():
     user_id = session["user_id"]
-    user_id = request.args.get("user_id")
-    # TODO: Complete Profile Building.
-    # # insert the new user into the database
-    # query = "INSERT INTO NUser (first_name, last_name, phone_number, age, gender, email_id, username, upassword, hint, languages_known) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    # cursor.execute(query, (first_name, last_name, phone_number, age, gender, email_id, username, upassword, hint, languages_known))
-    # db.commit()
-    return render_template("profile.html")
+    with db.cursor() as cursor:
+        query_get_profile = "SELECT * FROM nuser WHERE id=%s"
+        cursor.execute(query_get_profile, user_id)
+        profile = cursor.fetchone()
+    return render_template("profile.html",profile=profile)
+
+@profile_bp.route("/update_profile", methods=["POST"])
+def update_profile():
+    user_id = session["user_id"]
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    phone_number = request.form["phone_number"]
+    date_of_birth = request.form["date_of_birth"]
+    gender = request.form["gender"]
+    email_id = request.form["email_id"]
+    username = request.form["username"]
+    upassword = request.form["upassword"]
+    hint = request.form["hint"]
+    languages_known = request.form["languages_known"]
+    with db.cursor() as cursor:
+        query_update_profile = "UPDATE nuser " \
+                            "SET first_name=%s, last_name=%s, phone_number=%s, date_of_birth=%s, gender=%s, email_id=%s, username=%s, upassword=%s, hint=%s, languages_known=%s " \
+                               "WHERE id=%s"
+        cursor.execute(query_update_profile, (first_name, last_name, phone_number, date_of_birth, gender, email_id, username, upassword, hint, languages_known,user_id))
+        db.commit()
+    return render_template(url_for("profile_bp.profile"))
