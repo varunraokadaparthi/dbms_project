@@ -15,11 +15,10 @@ def create_account_post():
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
     phone_number = request.form["phone_number"]
-    age = request.form["age"]
+    date_of_birth = request.form["age"]
     gender = request.form["gender"]
     email_id = request.form["email_id"]
     hint = request.form["hint"]
-    languages_known = request.form["languages_known"]
 
     with db.cursor() as cursor:
         # check if the username already exists
@@ -31,7 +30,7 @@ def create_account_post():
             return redirect(url_for("create_account_bp.create_account"))
         else:
             # insert the new user into the database
-            query = "INSERT INTO NUser (first_name, last_name, phone_number, age, gender, email_id, username, upassword, hint, languages_known) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query, (first_name, last_name, phone_number, age, gender, email_id, username, upassword, hint, languages_known))
+            query = "INSERT INTO NUser (first_name, last_name, phone_number, date_of_birth, gender, email_id, username, upassword, hint) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (first_name, last_name, phone_number, date_of_birth, gender, email_id, username, upassword, hint))
             db.commit()
             return redirect(url_for("index_bp.index"))

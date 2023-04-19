@@ -1,0 +1,260 @@
+<html>
+<head></head>
+<body data-new-gr-c-s-check-loaded="14.1105.0" data-gr-ext-installed="">
+<div class="formbold-main-wrapper">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <div class="formbold-form-wrapper">
+
+
+        <form action="/create_event" method="POST">
+            <div class="formbold-form-title">
+                <h2 class="">Create an Event</h2>
+                <p>
+                    Fill the details about the event.
+                </p>
+            </div>
+
+            <div class="formbold-mb-3">
+                <label for="title" class="formbold-form-label">
+                    Title
+                </label>
+                <input type="text" name="title" id="title" class="formbold-form-input">
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="start_time" class="formbold-form-label">
+                        Start Time
+                    </label>
+                    <input type="datetime-local" name="start_time" id="start_time" class="formbold-form-input">
+                    <label for="end_time" class="formbold-form-label">
+                        End Time
+                    </label>
+                    <input type="datetime-local" name="end_time" id="end_time" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="min_age" class="formbold-form-label"> Min Age </label>
+                    <input type="number" name="min_age" id="min_age" class="formbold-form-input">
+                </div>
+                <div>
+                    <label for="max_people" class="formbold-form-label"> Max People </label>
+                    <input type="number" name="max_people" id="max_people" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="fees" class="formbold-form-label"> Fees </label>
+                    <input type="number" name="fees" id="fees" class="formbold-form-input">
+                </div>
+                <div>
+                    <label for="requirements" class="formbold-form-label"> Requirements </label>
+                    <input type="text" name="requirements" id="requirements" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-mb-3">
+                <label for="street" class="formbold-form-label">
+                    Street Adress
+                </label>
+                <input type="text" name="street" id="street" class="formbold-form-input">
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="city" class="formbold-form-label"> City </label>
+                    <input type="text" name="city" id="city" class="formbold-form-input">
+                </div>
+                <div>
+                    <label for="zipcode" class="formbold-form-label"> Zip Code </label>
+                    <input type="number" name="zipcode" id="zipcode" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="interest_type" class="formbold-form-label"> Interest Type </label>
+                    <input type="text" name="interest_type" id="interest_type" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-mb-3">
+                <label for="agenda" class="formbold-form-label">
+                    Agenda
+                </label>
+                <input type="text" name="agenda" id="agenda" class="formbold-form-input">
+            </div>
+
+
+            <button class="formbold-btn">Create Event</button>
+        </form>
+    </div>
+</div>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .formbold-mb-3 {
+        margin-bottom: 15px;
+    }
+
+    .formbold-relative {
+        position: relative;
+    }
+
+    .formbold-opacity-0 {
+        opacity: 0;
+    }
+
+    .formbold-stroke-current {
+        stroke: currentColor;
+    }
+
+    #supportCheckbox:checked ~ div span {
+        opacity: 1;
+    }
+
+    .formbold-main-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px;
+    }
+
+    .formbold-form-wrapper {
+        margin: 0 auto;
+        max-width: 570px;
+        width: 100%;
+        background: white;
+        padding: 40px;
+    }
+
+    .formbold-img {
+        margin-bottom: 45px;
+    }
+
+    .formbold-form-title {
+        margin-bottom: 30px;
+    }
+
+    .formbold-form-title h2 {
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 34px;
+        color: #07074d;
+    }
+
+    .formbold-form-title p {
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+        margin-top: 12px;
+    }
+
+    .formbold-input-flex {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .formbold-input-flex > div {
+        width: 50%;
+    }
+
+    .formbold-form-input {
+        text-align: center;
+        width: 100%;
+        padding: 13px 22px;
+        border-radius: 5px;
+        border: 1px solid #dde3ec;
+        background: #ffffff;
+        font-weight: 500;
+        font-size: 16px;
+        color: #536387;
+        outline: none;
+        resize: none;
+    }
+
+    .formbold-form-input:focus {
+        border-color: #6a64f1;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .formbold-form-label {
+        color: #536387;
+        font-size: 14px;
+        line-height: 24px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .formbold-checkbox-label {
+        display: flex;
+        cursor: pointer;
+        user-select: none;
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+    }
+
+    .formbold-checkbox-label a {
+        margin-left: 5px;
+        color: #6a64f1;
+    }
+
+    .formbold-input-checkbox {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .formbold-checkbox-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-right: 16px;
+        margin-top: 2px;
+        border: 0.7px solid #dde3ec;
+        border-radius: 3px;
+    }
+
+    .formbold-btn {
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 14px 25px;
+        border: none;
+        font-weight: 500;
+        background-color: #6a64f1;
+        color: white;
+        cursor: pointer;
+        margin-top: 25px;
+    }
+
+    .formbold-btn:hover {
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+</style>
+</body>
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>
