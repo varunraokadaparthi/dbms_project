@@ -31,6 +31,10 @@
     <h1>CarPooling</h1>
     <!-- add your dashboard content here -->
     <ul class="list-group list-group-flush">
+    <script>
+        var variable = {{ event_id }}
+        console.log("event_id" + variable)
+    </script>
         <li class="list-group-item">
             <a href="/event?event_id={{ event_id }}">{{ event_name }}</a>
         </li>

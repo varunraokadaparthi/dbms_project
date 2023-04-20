@@ -78,7 +78,12 @@
             <div class="formbold-input-flex">
                 <div>
                     <label for="interest_type" class="formbold-form-label"> Interest Type </label>
-                    <input type="text" name="interest_type" id="interest_type" class="formbold-form-input">
+                    <select id="interest_type" name="interest_type" class="formbold-form-input">
+                        {% for interest in interests %}
+                        <option value="{{ interest.interest_type }}">{{ interest.interest_type }}</option>
+                        {% endfor %}
+                    </select>
+{#                    <input type="text" name="interest_type" id="interest_type" class="formbold-form-input">#}
                 </div>
             </div>
 
