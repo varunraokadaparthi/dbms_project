@@ -28,11 +28,59 @@
 </nav>
 
 <div class="container">
-    <h1>CarPooling</h1>
-    <!-- add your dashboard content here -->
+    <h1 class="badge badge-info">HOSTING</h1>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item"></li>
-        <li class="list-group-item">Test1</li>
+        <table>
+            <thead>
+            <tr>
+                <th> Event</th>
+                <th> Zip Code</th>
+                <th> Vehicle Type</th>
+                <th> Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for carpool in carpool_hosting_list %}
+                <tr>
+                    <td>
+                        <a href="/event?event_id={{ carpool.event_id }}">{{ carpool.event_title }}</a>
+                    </td>
+                    <td>{{ carpool.pickup_zipcode }}</td>
+                    <td>{{ carpool.vehicle_type }}</td>
+                    <td>{{ carpool.price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </ul>
+    <h1 class="badge badge-info">JOINED</h1>
+    <ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Host </th>
+                <th> Host Phone No </th>
+                <th> Event</th>
+                <th> Zip Code</th>
+                <th> Vehicle Type</th>
+                <th> Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for carpool in carpool_joined_list %}
+                <tr>
+                    <td>{{ carpool.user_name }}</td>
+                    <td>{{ carpool.host_phone_number }}</td>
+                    <td>
+                        <a href="/event?event_id={{ carpool.event_id }}">{{ carpool.event_title }}</a>
+                    </td>
+                    <td>{{ carpool.pickup_zipcode }}</td>
+                    <td>{{ carpool.vehicle_type }}</td>
+                    <td>{{ carpool.price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </ul>
 </div>
 

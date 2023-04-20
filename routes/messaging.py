@@ -31,12 +31,12 @@ def remove_friend():
     return render_template(url_for("messaging_bp.messaging"))
 
 
-@messaging_bp.route("/chat/<friend_id>", methods=["GET"])
+@messaging_bp.route("/chat/<friend_id>")
 def chat(friend_id):
     user_id = session["user_id"]
     with db.cursor() as cursor:
         query_messages = "SELECT * FROM messages WHERE sender_id IN (%s, %s) AND receiver_id IN (%s, %s)"
-        cursor.execute(query_messages, (user_id,friend_id, friend_id, user_id))
+        cursor.execute(query_messages, (user_id, friend_id, friend_id, user_id))
         unsorted_messages = cursor.fetchall()
     sorted_messages = sorted(unsorted_messages, key=lambda x: x["sent_at"])
     return render_template("chat.html", messsages=sorted_messages, friend_id=friend_id, user_id=user_id)
@@ -52,8 +52,4 @@ def update_chat():
                          "VALUES(%s, %s, %s, %s)"
         cursor.execute(query_new_message, (user_id, friend_id, message, sent_at))
         db.commit()
-        query_messages = "SELECT * FROM messages WHERE sender_id IN (%s, %s) AND receiver_id IN (%s, %s)"
-        cursor.execute(query_messages, (user_id, friend_id, friend_id, user_id))
-        unsorted_messages = cursor.fetchall()
-    sorted_messages = sorted(unsorted_messages, key=lambda x: x["sent_at"])
-    return render_template("chat.html", messsages=sorted_messages, friend_id=friend_id, user_id=user_id)
+    return redirect(url_for('messaging_bp.chat', friend_id=friend_id))

@@ -56,10 +56,37 @@ def event():
         host = cursor.fetchone()
         host_name = host.get("first_name") + " " + host.get("last_name")
 
+        query_get_carpools_for_this_event = "SELECT carpool_id FROM carpool WHERE event_id=%s"
+        cursor.execute(query_get_carpools_for_this_event, event_id)
+        carpools_this_event = cursor.fetchall()
+        user_joined_carpool = 0
+        for carpool in carpools_this_event:
+            query_carpools_user = "SELECT * FROM joins WHERE carpool_id=%s AND user_id=%s"
+            cursor.execute(query_carpools_user, (carpool.get("carpool_id"), user_id))
+            carpool_user = cursor.fetchone()
+            if cursor.fetchone():
+                user_joined_carpool = carpool_user.get("carpool_id")
+                break
+        if user_joined_carpool:
+            query_get_carpool = "SELECT * FROM carpool WHERE carpool_id=%s"
+            cursor.execute(query_get_carpool, user_joined_carpool)
+            carpool = cursor.fetchone()
 
-    return render_template("event.html", event=event, host_name=host_name,
-                           already_registered=already_registered)
+            query_get_user_name = "SELECT first_name, last_name, phone_number FROM nuser WHERE id=%s"
+            cursor.execute(query_get_user_name, carpool.get("user_id"))
+            user = cursor.fetchone()
+            carpool["user_name"] = user.get("first_name") + " " + user.get("last_name")
+            carpool["host_phone_number"] = user.get("phone_number")
 
+            query_get_vehicle = "SELECT * FROM vehicle WHERE vehicle_id=%s AND user_id=%s"
+            cursor.execute(query_get_vehicle, (carpool.get("vehicle_id"), carpool.get("user_id")))
+            vehicle = cursor.fetchone()
+            carpool["vehicle_type"] = vehicle.get("vehicle_type")
+            return render_template("event_carpool_dont_register.html", event=event, host_name=host_name,
+                                   already_registered=already_registered, carpool=carpool)
+        else:
+            return render_template("event_carpool_allow_register.html", event=event, host_name=host_name,
+                                   already_registered=already_registered)
 
 @events_bp.route("/event_attended_by")
 def event_attendies():
@@ -88,7 +115,7 @@ def event_attendies():
             cursor.execute(query2, user_id)
             host = cursor.fetchone()
             host_name = host.get("first_name") + " " + host.get("last_name")
-    return render_template("event.html", event=event, host_name=host_name,
+    return render_template("event_carpool_allow_register.html", event=event, host_name=host_name,
                            already_registered=already_registered)
 
 
@@ -111,7 +138,6 @@ def create_event_post():
     interest_type = request.form["interest_type"]
     agenda = request.form["agenda"]
     user_id = session["user_id"]
-    address_id = 1
     with db.cursor() as cursor:
         # check if the username already exists
         query = "SELECT * FROM uevent WHERE title=%s"
@@ -123,8 +149,8 @@ def create_event_post():
         else:
             # insert the new user into the database
             # TODO: When user creates an event, he should be added to attended by
-            query = "INSERT INTO uevent (start_time, end_time, max_people, fees, requirements, street_name, city, zip_code, min_age, title, agenda, host_id, interest_type, address_id)" \
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query, (start_time, end_time, max_people, fees, requirements, street, city, zipcode, min_age, title, agenda, user_id, interest_type, address_id))
+            query = "INSERT INTO uevent (start_time, end_time, max_people, fees, requirements, street_name, city, zip_code, min_age, title, agenda, host_id, interest_type)" \
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (start_time, end_time, max_people, fees, requirements, street, city, zipcode, min_age, title, agenda, user_id, interest_type))
             db.commit()
             return redirect(url_for("events_bp.events"))

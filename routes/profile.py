@@ -25,11 +25,10 @@ def update_profile():
     username = request.form["username"]
     upassword = request.form["upassword"]
     hint = request.form["hint"]
-    languages_known = request.form["languages_known"]
     with db.cursor() as cursor:
         query_update_profile = "UPDATE nuser " \
-                            "SET first_name=%s, last_name=%s, phone_number=%s, date_of_birth=%s, gender=%s, email_id=%s, username=%s, upassword=%s, hint=%s, languages_known=%s " \
+                            "SET first_name=%s, last_name=%s, phone_number=%s, date_of_birth=%s, gender=%s, email_id=%s, username=%s, upassword=%s, hint=%s " \
                                "WHERE id=%s"
-        cursor.execute(query_update_profile, (first_name, last_name, phone_number, date_of_birth, gender, email_id, username, upassword, hint, languages_known,user_id))
+        cursor.execute(query_update_profile, (first_name, last_name, phone_number, date_of_birth, gender, email_id, username, upassword, hint,user_id))
         db.commit()
-    return render_template(url_for("profile_bp.profile"))
+    return redirect(url_for("profile_bp.profile"))
