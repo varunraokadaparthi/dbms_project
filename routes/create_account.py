@@ -15,7 +15,7 @@ def create_account_post():
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
     phone_number = request.form["phone_number"]
-    date_of_birth = request.form["age"]
+    date_of_birth = request.form["date_of_birth"]
     gender = request.form["gender"]
     email_id = request.form["email_id"]
     hint = request.form["hint"]
