@@ -38,13 +38,27 @@
                         <a href="/chat/{{ friend.id }}">{{ friend.username }}</a>
                     </div>
                     <div class="col">
-                       <a style="text-align: right;" class="btn btn-danger btn-sm" href="/remove_friend?friend_id={{ friend.id }}">remove friend</a>
+                        <a style="text-align: right;" class="btn btn-danger btn-sm"
+                           href="/remove_friend?friend_id={{ friend.id }}">remove friend</a>
                     </div>
-                    </div>
+                </div>
             </li>
         {% endfor %}
     </ul>
     <h1 class="badge badge-info">OTHERS</h1>
+    <ul class="list-group list-group-flush">
+        {% for friend in recommend_friends_names %}
+            <li class="list-group-item">
+                <a>{{ friend.username }}</a>
+                <script>
+                    variable = "{{ friend.username }}";
+                    console.log("username" + variable)
+                </script>
+                <a style="text-align: right;" class="btn btn-danger btn-sm"
+                   href="/remove_friend?friend_id={{ friend.id }}">add friend</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>
