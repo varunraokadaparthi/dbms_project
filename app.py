@@ -7,6 +7,8 @@ from routes.events import events_bp
 from routes.carpooling import carpooling_bp
 from routes.messaging import messaging_bp
 from routes.profile import profile_bp
+from routes.vehicle import vehicle_bp
+from routes.interest import interest_bp
 from flask import Flask, render_template, request, redirect, url_for
 
 
@@ -20,3 +22,5 @@ app.register_blueprint(events_bp)
 app.register_blueprint(carpooling_bp)
 app.register_blueprint(messaging_bp)
 app.register_blueprint(profile_bp)
+app.register_blueprint(vehicle_bp)
+app.register_blueprint(interest_bp)

@@ -23,52 +23,127 @@
         <li><a href="/events">Events</a></li>
         <li><a href="/carpooling">Carpooling</a></li>
         <li><a href="/messaging">Messaging</a></li>
-        <li><a class="active" href="/profile">Profile</a></li>
+        <li><a class="active" href="/profile">{{ session.username }}</a></li>
     </ul>
 </nav>
 
 <div class="container">
     <h1>Profile</h1>
     <!-- add your dashboard content here -->
-    <div class="card mx-auto">
+    <div class="card">
         {% set image_path = url_for('static', filename="images/user.png") %}
         <img class="card-img-top" height="200" width="200" src="{{ image_path }}"
              alt="Image not found"
              onerror="this.src= '{{ url_for('static', filename="images/none.png") }}'">
         <div class="card-body">
             <form action="/update_profile" method="POST">
-                <h1 class="card-title"> <input type="text" name="username" value="{{ profile.username }}"/></h1>
+                <h1 class="card-title"><input type="text" name="username" value="{{ profile.username }}"/></h1>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">First Name:
-                        <input type="text" name="first_name" value="{{ profile.first_name }}">
-                    </li>
-                    <li class="list-group-item">Last Name:
-                        <input type="text" name="last_name" value="{{ profile.last_name }}">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">First Name:</div>
+                            <input class="col" type="text" name="first_name" value="{{ profile.first_name }}">
+                            <div class="col">Last Name:</div>
+                            <input class="col" type="text" name="last_name" value="{{ profile.last_name }}">
+                        </div>
                     </li>
                     {#                TODO: How to hide password and use hint#}
-                    <li class="list-group-item">password:
-                        <input type="text" name="upassword" value="{{ profile.upassword }}">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">Password:</div>
+                            <input class="col" type="text" name="upassword" value="{{ profile.upassword }}">
+                            <div class="col">Hint:</div>
+                            <input class="col" type="text" name="hint" value="{{ profile.hint }}">
+                        </div>
                     </li>
-                    <li class="list-group-item">Hint:
-                        <input type="text" name="hint" value="{{ profile.hint }}">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">DOB:</div>
+                            <input class="col" type="date" name="date_of_birth" value="{{ profile.date_of_birth }}">
+                            <div class="col">Phone No:</div>
+                            <input class="col" type="number" name="phone_number" value="{{ profile.phone_number }}">
+                        </div>
                     </li>
-                    <li class="list-group-item">DOB:
-                        <input type="date" name="date_of_birth" value="{{ profile.date_of_birth }}">
-                    </li>
-                    <li class="list-group-item">Phone No:
-                        <input type="number" name="phone_number" value="{{ profile.phone_number }}">
-                    </li>
-                    <li class="list-group-item">Email:
-                        <input type="text" name="email_id" value="{{ profile.email_id }}">
-                    </li>
-                    <li class="list-group-item">Gender:
-                        <input type="text" name="gender" value="{{ profile.gender }}">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">Email:</div>
+                            <input class="col" type="text" name="email_id" value="{{ profile.email_id }}">
+                            <div class="col">Gender:</div>
+                            <input class="col" type="text" name="gender" value="{{ profile.gender }}">
+                        </div>
                     </li>
                 </ul>
                 <button class="btn btn-success" type="submit" name="button">Save</button>
             </form>
+
         </div>
     </div>
+    <h1 class="badge badge-info">
+        __________________________________________________________________________INTERESTS_________________________________________________________________________
+    </h1>
+    {% for interest in user_interest_list %}
+        {{ interest }}
+        <a class="btn btn-danger btn-sm" href="/interest_remove?interest_type={{ interest }}">X</a>
+    {% endfor %}
+    <form action="/interest_add" method="POST">
+        <select id="interest_type" name="interest_type" class="formbold-form-input">
+            {% for interest in non_interest_list %}
+                <option value="{{ interest }}">{{ interest }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-warning btn-sm">Add</button>
+    </form>
+    <h1 class="badge badge-info">
+        ___________________________________________________________________________VEHICLES_________________________________________________________________________
+    </h1>
+    <ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Registration No</th>
+                <th> Vehicle Type</th>
+            </tr>
+            </thead>
+            {% for vehicle in vehicles %}
+                <tr>
+                    <form action="/vehicle_update?vehicle_id={{ vehicle.vehicle_id }}" method="POST">
+                        <td><input type="text" name="registration_no" id="registration_no"
+                                   value="{{ vehicle.registration_no }}"></td>
+                        <td>
+                            <select id="vehicle_type" name="vehicle_type" class="formbold-form-input">
+                                {% for vehicle_type in vehicle_types %}
+                                    <option value="{{ vehicle_type.vehicle_type }}">{{ vehicle_type.vehicle_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-success btn-sm">Edit</button>
+                        </td>
+                        <td>
+                            <a href="/vehicle_remove?vehicle_id={{ vehicle.vehicle_id }}" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </form>
+                </tr>
+            {% endfor %}
+            <tr>
+                <form action="/vehicle_add" method="POST">
+                    <td><input type="text" name="registration_no" id="registration_no"></td>
+                    <td>
+                        <select id="vehicle_type" name="vehicle_type" class="formbold-form-input">
+                            {% for vehicle_type in vehicle_types %}
+                                <option value="{{ vehicle_type.vehicle_type }}">{{ vehicle_type.vehicle_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Add Vehicle</button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+
+    </ul>
 </div>
 
 </body>

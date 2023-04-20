@@ -22,6 +22,7 @@ def login():
             session["user_id"] = user.get("id")
             session["first_name"] = user.get("first_name")
             session["last_name"] = user.get("last_name")
+            session["username"] = username
             return redirect(url_for("events_bp.events"))
         else:
             return redirect(url_for("index_bp.index"))
