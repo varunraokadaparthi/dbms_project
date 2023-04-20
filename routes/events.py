@@ -5,6 +5,7 @@ events_bp = Blueprint("events_bp", __name__)
 
 @events_bp.route("/events")
 def events():
+    events_id_remember = []
     user_id = session["user_id"]
     with db.cursor() as cursor:
         # get the events user is hosting
@@ -16,6 +17,7 @@ def events():
             query2 = "SELECT * FROM UEvent WHERE event_id=%s"
             cursor.execute(query2, user_event.get("event_id"))
             user_hosting_events.append(cursor.fetchone())
+            events_id_remember.append(user_event.get("event_id"))
 
         # get the events user is/will be attending
         query3 = "SELECT * FROM attended_by WHERE user_id=%s"
@@ -26,13 +28,29 @@ def events():
             query4 = "SELECT * FROM UEvent WHERE event_id=%s"
             cursor.execute(query4, user_event.get("event_id"))
             user_attending_events.append(cursor.fetchone())
+            events_id_remember.append(user_event.get("event_id"))
 
         # get all events
         query5 = "SELECT * FROM UEvent"
         cursor.execute(query5)
         all_events = cursor.fetchall()
+        recommend_user_event_id = []
+        for user_all_events in all_events:
+            if user_all_events.get("event_id") not in events_id_remember:
+                recommend_user_event_id.append(user_all_events)
 
-        return render_template("events.html", all_events=all_events,
+        query_Interest = "SELECT * FROM interest"
+        cursor.execute(query_Interest)
+        user_events_interest = cursor.fetchall()
+        user_interest = []
+        for interest in user_events_interest:
+            user_interest.append(interest)
+        final_recommend_user_event_id = []
+        for recommend in recommend_user_event_id:
+            if recommend.get("interest") in user_interest:
+                final_recommend_user_event_id.append(recommend)
+
+        return render_template("events.html", all_events=final_recommend_user_event_id,
                                user_hosting_events=user_hosting_events,
                                user_attending_events=user_attending_events)
 
