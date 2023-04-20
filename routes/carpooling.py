@@ -63,7 +63,7 @@ def carpooling_event(event_id):
         cursor.execute(query_carpools_with_event_id, event_id)
         carpool_list = cursor.fetchall()
         if len(carpool_list) == 0:
-            return render_template("carpooling_event.html")
+            return render_template("carpooling_event.html", event_id=event_id)
 
         for carpool in carpool_list:
             query_get_user_name = "SELECT first_name, last_name, phone_number FROM nuser WHERE id=%s"

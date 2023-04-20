@@ -121,7 +121,11 @@ def event_attendies():
 
 @events_bp.route("/create_event")
 def create_event():
-    return render_template("create_event.html")
+    with db.cursor() as cursor:
+        query_all_interests = "SELECT * FROM interest"
+        cursor.execute(query_all_interests)
+        interests = cursor.fetchall()
+    return render_template("create_event.html", interests=interests)
 
 @events_bp.route("/create_event", methods=["POST"])
 def create_event_post():

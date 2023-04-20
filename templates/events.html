@@ -32,7 +32,7 @@
     <h1>Welcome, {{ session["first_name"] }} {{ session["last_name"] }}</h1>
     <a href="/create_event"><button type="button" class="btn btn-success btn-lg btn-block">Host an Event</button></a>
     <ul>
-        <h1 class="badge badge-info">HOSTING</h1>
+        <h1 class="badge badge-info">____________________________________________________________________________HOSTING____________________________________________________________________________</h1>
         <div class="row">
             {% for event in user_hosting_events %}
                 <li class="col-sm-3 mx-auto">
@@ -49,7 +49,7 @@
                 </li>
             {% endfor %}
         </div>
-        <h1 class="badge badge-info">ATTENDING</h1>
+        <h1 class="badge badge-info">___________________________________________________________________________ATTENDING___________________________________________________________________________</h1>
         <div class="row">
             {% for event in user_attending_events %}
                 <li class="col-sm-3 mx-auto">
@@ -66,7 +66,7 @@
                 </li>
             {% endfor %}
         </div>
-        <h1 class="badge badge-info">ALL EVENTS</h1>
+        <h1 class="badge badge-info">___________________________________________________________________________ALL EVENTS___________________________________________________________________________</h1>
         <div class="row">
             {% for event in all_events %}
                 <li class="col-sm-3 mx-auto">
