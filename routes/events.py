@@ -39,15 +39,17 @@ def events():
             if user_all_events.get("event_id") not in events_id_remember:
                 recommend_user_event_id.append(user_all_events)
 
-        query_Interest = "SELECT * FROM interest"
-        cursor.execute(query_Interest)
+        # getting all the user interest id's.
+        query_Interest = "SELECT * FROM user_interest WHERE user_id = %s;"
+        cursor.execute(query_Interest,user_id)
         user_events_interest = cursor.fetchall()
-        user_interest = []
+        user_interests = []
         for interest in user_events_interest:
-            user_interest.append(interest)
+            user_interests.append(interest.get("interest_type"))
+
         final_recommend_user_event_id = []
         for recommend in recommend_user_event_id:
-            if recommend.get("interest") in user_interest:
+            if recommend.get("interest_type") in user_interests:
                 final_recommend_user_event_id.append(recommend)
 
         return render_template("events.html", all_events=final_recommend_user_event_id,

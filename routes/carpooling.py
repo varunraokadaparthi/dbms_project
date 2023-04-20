@@ -24,10 +24,23 @@ def carpooling_tab_helper():
             vehicle = cursor.fetchone()
             carpool["vehicle_type"] = vehicle.get("vehicle_type")
 
-            query_get_event_name = "SELECT title FROM uevent WHERE event_id=%s"
+            query_get_event_name = "SELECT title,start_time FROM uevent WHERE event_id=%s"
             cursor.execute(query_get_event_name, carpool.get("event_id"))
             event = cursor.fetchone()
             carpool["event_title"] = event.get("title")
+            carpool["start_time"] = event.get("start_time")
+
+            query_get_users_joined_in_this_carpool = "SELECT * FROM joins WHERE carpool_id=%s"
+            cursor.execute(query_get_users_joined_in_this_carpool, carpool.get("carpool_id"))
+            users_joined_in_this_carpool_list = cursor.fetchall()
+            users_joined_in_this_carpool_appended = ""
+            for user in users_joined_in_this_carpool_list:
+                query_get_user_name = "SELECT first_name, last_name FROM nuser WHERE id=%s"
+                cursor.execute(query_get_user_name, user.get("user_id"))
+                user = cursor.fetchone()
+                users_joined_in_this_carpool_appended += user.get("first_name") + " " + user.get("last_name") + ","
+            users_joined_in_this_carpool_appended = users_joined_in_this_carpool_appended[:-1]
+            carpool["users_joined"] = users_joined_in_this_carpool_appended
 
         query_get_user_joined_carpools = "SELECT * FROM joins WHERE user_id=%s"
         cursor.execute(query_get_user_joined_carpools, user_id)
@@ -49,10 +62,11 @@ def carpooling_tab_helper():
             vehicle = cursor.fetchone()
             carpool["vehicle_type"] = vehicle.get("vehicle_type")
 
-            query_get_event_name = "SELECT title FROM uevent WHERE event_id=%s"
+            query_get_event_name = "SELECT title,start_time FROM uevent WHERE event_id=%s"
             cursor.execute(query_get_event_name, carpool.get("event_id"))
             event = cursor.fetchone()
             carpool["event_title"] = event.get("title")
+            carpool["start_time"] = event.get("start_time")
     return carpool_hosting_list, carpool_joined_list
 
 
