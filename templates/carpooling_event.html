@@ -40,11 +40,11 @@
         <table>
             <thead>
             <tr>
-                <th> Host</th>
-                <th> Phone No</th>
-                <th> Zip Code</th>
-                <th> Vehicle Type</th>
-                <th> Fee</th>
+                <th> Host </th>
+                <th> Host Phone No </th>
+                <th> Zip Code </th>
+                <th> Vehicle Type </th>
+                <th> Price </th>
                 <th></th>
             </tr>
             </thead>
@@ -52,12 +52,12 @@
                 <li class="list-group-item">
                     <tr>
                         <td>{{ carpool.user_name }}</td>
-                        <td>{{ carpool.phone_number }}</td>
+                        <td>{{ carpool.host_phone_number }}</td>
                         <td>{{ carpool.pickup_zipcode }}</td>
                         <td>{{ carpool.vehicle_type }}</td>
                         <td>{{ carpool.price }}</td>
                         <td>
-                            <a class="btn btn-success" href="/carpool_join?carpool_id={{ carpool.id }}">Join Ride</a>
+                            <a class="btn btn-success" href="/carpool_join?carpool_id={{ carpool.carpool_id }}">Join Ride</a>
                         </td>
                     </tr>
                 </li>

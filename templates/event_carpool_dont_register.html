@@ -53,13 +53,36 @@
     </div>
     <script type="text/javascript">
         var element = document.getElementById("already_registered");
-        var variable = "{{ already_registered }}";
+        var already_registered = "{{ already_registered }}";
+        var already_joined_carpool = "{{ already_joined_carpool }}";
         var content;
-        if (variable == "True") {
+        if (already_registered == "True") {
+            console.log("True")
             content = '<h1>Already Registered</h1>' +
                 '<br>' +
-                '<a class="btn btn-outline-dark" href="/carpooling_event/{{ event.event_id }}">Carpool</a>'
+                `<ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Host </th>
+                <th> Host Phone No </th>
+                <th> Zip Code</th>
+                <th> Vehicle Type</th>
+                <th> Price</th>
+                <th></th>
+            </tr>
+            </thead>
+                <tr>
+                    <td>{{ carpool.user_name }}</td>
+                    <td>{{ carpool.host_phone_number }}</td>
+                    <td>{{ carpool.pickup_zipcode }}</td>
+                    <td>{{ carpool.vehicle_type }}</td>
+                    <td>{{ carpool.price }}</td>
+                </tr>
+            </tbody>
+        </table>`
         } else {
+            console.log("False")
             content =
                 '<a class="btn btn-outline-dark" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>';
         }
