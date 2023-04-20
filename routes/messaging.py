@@ -86,6 +86,16 @@ def remove_friend():
         db.commit()
     return redirect(url_for("messaging_bp.messaging"))
 
+@messaging_bp.route("/add_friend")
+def add_friend():
+    user_id = session["user_id"]
+    friend_id = request.args.get("friend_id")
+    with db.cursor() as cursor:
+        query_add_friend = "INSERT INTO befriends(friend_id, user_id) VALUES (%s, %s)"
+        cursor.execute(query_add_friend, (friend_id, user_id))
+        db.commit()
+    return redirect(url_for("messaging_bp.messaging"))
+
 
 @messaging_bp.route("/chat/<friend_id>")
 def chat(friend_id):

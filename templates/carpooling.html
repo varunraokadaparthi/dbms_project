@@ -34,10 +34,11 @@
             <thead>
             <tr>
                 <th> Event</th>
+                <th> Pickup Time</th>
                 <th> Zip Code</th>
                 <th> Vehicle Type</th>
                 <th> Price</th>
-                <th></th>
+                <th> Users Joined</th>
             </tr>
             </thead>
             {% for carpool in carpool_hosting_list %}
@@ -45,9 +46,11 @@
                     <td>
                         <a href="/event?event_id={{ carpool.event_id }}">{{ carpool.event_title }}</a>
                     </td>
+                    <td>{{ carpool.start_time }}</td>
                     <td>{{ carpool.pickup_zipcode }}</td>
                     <td>{{ carpool.vehicle_type }}</td>
                     <td>{{ carpool.price }}</td>
+                    <td>{{ carpool.users_joined }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -61,6 +64,7 @@
                 <th> Host</th>
                 <th> Host Phone No</th>
                 <th> Event</th>
+                <th> Pickup Time</th>
                 <th> Zip Code</th>
                 <th> Vehicle Type</th>
                 <th> Price</th>
@@ -74,6 +78,7 @@
                     <td>
                         <a href="/event?event_id={{ carpool.event_id }}">{{ carpool.event_title }}</a>
                     </td>
+                    <td>{{ carpool.start_time }}
                     <td>{{ carpool.pickup_zipcode }}</td>
                     <td>{{ carpool.vehicle_type }}</td>
                     <td>{{ carpool.price }}</td>
