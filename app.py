@@ -9,6 +9,7 @@ from routes.messaging import messaging_bp
 from routes.profile import profile_bp
 from routes.vehicle import vehicle_bp
 from routes.interest import interest_bp
+from routes.issue import issue_bp
 from flask import Flask, render_template, request, redirect, url_for
 
 
@@ -24,3 +25,4 @@ app.register_blueprint(messaging_bp)
 app.register_blueprint(profile_bp)
 app.register_blueprint(vehicle_bp)
 app.register_blueprint(interest_bp)
+app.register_blueprint(issue_bp)
