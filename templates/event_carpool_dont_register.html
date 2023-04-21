@@ -119,6 +119,12 @@
                 '<a class="btn btn-outline-dark" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>'+
                 '<a className="btn btn-outline-dark" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
         }
+        content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-dark" href="/update_event?event_id={{ event.event_id }}">Update Event</a>';
+        content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-dark" href="/delete_event?event_id={{ event.event_id }}">Delete Event</a>';
         element.innerHTML = content;
     </script>
 

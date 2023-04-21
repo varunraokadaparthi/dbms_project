@@ -9,30 +9,36 @@ def events():
     user_id = session["user_id"]
     with db.cursor() as cursor:
         # get the events user is hosting
-        query1 = "SELECT * FROM User_Event WHERE user_id=%s"
-        cursor.execute(query1, user_id)
+        # TODO: user user_event instead
+        # query_user_hosting_events = "SELECT * FROM uevent WHERE host_id=%s"
+        query_user_hosting_events = "CALL GetUserHostingEvents(%s)"
+        cursor.execute(query_user_hosting_events, user_id)
         user_events = cursor.fetchall()
         user_hosting_events = []
         for user_event in user_events:
-            query2 = "SELECT * FROM UEvent WHERE event_id=%s"
-            cursor.execute(query2, user_event.get("event_id"))
+            # query_get_event_by_id = "SELECT * FROM UEvent WHERE event_id=%s"
+            query_get_event_by_id = "CALL GetEventById(%s)"
+            cursor.execute(query_get_event_by_id, user_event.get("event_id"))
             user_hosting_events.append(cursor.fetchone())
             events_id_remember.append(user_event.get("event_id"))
 
         # get the events user is/will be attending
-        query3 = "SELECT * FROM attended_by WHERE user_id=%s"
-        cursor.execute(query3, user_id)
+        # query_events_user_attending = "SELECT * FROM attended_by WHERE user_id=%s"
+        query_events_user_attending = "CALL GetUserAttendingEvents(%s)"
+        cursor.execute(query_events_user_attending, user_id)
         user_events = cursor.fetchall()
         user_attending_events = []
         for user_event in user_events:
-            query4 = "SELECT * FROM UEvent WHERE event_id=%s"
-            cursor.execute(query4, user_event.get("event_id"))
+            # query_event_details = "SELECT * FROM UEvent WHERE event_id=%s"
+            query_event_info = "CALL GetEventById(%s)"
+            cursor.execute(query_event_info, user_event.get("event_id"))
             user_attending_events.append(cursor.fetchone())
             events_id_remember.append(user_event.get("event_id"))
 
         # get all events
-        query5 = "SELECT * FROM UEvent"
-        cursor.execute(query5)
+        # query_get_all_events = "SELECT * FROM UEvent"
+        query_get_all_events = "CALL GetAllEvents()"
+        cursor.execute(query_get_all_events)
         all_events = cursor.fetchall()
         recommend_user_event_id = []
         for user_all_events in all_events:
@@ -40,8 +46,9 @@ def events():
                 recommend_user_event_id.append(user_all_events)
 
         # getting all the user interest id's.
-        query_Interest = "SELECT * FROM user_interest WHERE user_id = %s;"
-        cursor.execute(query_Interest,user_id)
+        # query_interest = "SELECT * FROM user_interest WHERE user_id = %s;"
+        query_interest = "CALL GetUserInterests(%s)"
+        cursor.execute(query_interest,user_id)
         user_events_interest = cursor.fetchall()
         user_interests = []
         for interest in user_events_interest:
@@ -62,27 +69,33 @@ def event():
     user_id = session["user_id"]
     event_id = request.args.get("event_id")
     with db.cursor() as cursor:
-        query = "SELECT * FROM UEvent WHERE event_id=%s"
-        cursor.execute(query, event_id)
+        # query_get_event_by_id = "SELECT * FROM UEvent WHERE event_id=%s"
+        query_get_event_by_id = "CALL GetEventById(%s)"
+        cursor.execute(query_get_event_by_id, event_id)
         event = cursor.fetchone()
 
         already_registered = False
-        query1 = "SELECT * FROM Attended_by WHERE event_id=%s AND user_id=%s"
-        cursor.execute(query1, (event_id, user_id))
+        query_check_user_attending_event = "SELECT * FROM Attended_by WHERE event_id=%s AND user_id=%s"
+        # TODO:
+        # query_check_user_attending_event = "CALL -----------"
+        cursor.execute(query_check_user_attending_event, (event_id, user_id))
         if cursor.rowcount == 1:
             already_registered = True
-        query2 = "SELECT * FROM nuser WHERE id=%s"
-        cursor.execute(query2, user_id)
+        # query_user_by_id = "SELECT * FROM nuser WHERE id=%s"
+        query_user_by_id = "CALL GetUserById(%s)"
+        cursor.execute(query_user_by_id, user_id)
         host = cursor.fetchone()
         host_name = host.get("first_name") + " " + host.get("last_name")
 
-        query_get_carpools_for_this_event = "SELECT carpool_id FROM carpool WHERE event_id=%s"
+        # query_get_carpools_for_this_event = "SELECT carpool_id FROM carpool WHERE event_id=%s"
+        query_get_carpools_for_this_event = "CALL GetCarpoolIDsForEvent(%s)"
         cursor.execute(query_get_carpools_for_this_event, event_id)
         carpools_this_event = cursor.fetchall()
         user_joined_carpool = 0
         for carpool in carpools_this_event:
-            query_carpools_user = "SELECT * FROM joins WHERE carpool_id=%s AND user_id=%s"
-            cursor.execute(query_carpools_user, (carpool.get("carpool_id"), user_id))
+            # query_user_joined_carpool = "SELECT * FROM joins WHERE carpool_id=%s AND user_id=%s"
+            query_user_joined_carpool = "CALL HasUserJoinedCarpool(%s, %s)"
+            cursor.execute(query_user_joined_carpool, (carpool.get("carpool_id"), user_id))
             carpool_user = cursor.fetchone()
             if carpool_user:
                 user_joined_carpool = carpool_user.get("carpool_id")
@@ -119,11 +132,60 @@ def event():
             return render_template("event_carpool_allow_register.html", event=event, host_name=host_name,
                                    already_registered=already_registered,is_issue_already_raised=is_issue_already_raised, issue=issue)
 
+
+@events_bp.route("/delete_event")
+def delete_event():
+    with db.cursor() as cursor:
+        event_id = request.args.get("event_id")
+        user_id = session["user_id"]
+
+
+        #check if user is hosting it
+        query_hosting_an_event = "SELECT * FROM uevent WHERE host_id=%s AND event_id=%s"
+        cursor.execute(query_hosting_an_event,(user_id, event_id))
+        hosting_an_event = cursor.fetchone()
+
+        if hosting_an_event:
+            # delete the event
+            query_delete_event = "DELETE FROM uevent WHERE event_id=%s"
+            cursor.execute(query_delete_event, event_id)
+        else:
+            # delete only the joined event
+            query_delete_event = "DELETE FROM attended_by WHERE event_id=%s AND user_id=%s"
+            cursor.execute(query_delete_event, (event_id,user_id))
+
+@events_bp.route("/update_event")
+def update_event():
+    with db.cursor() as cursor:
+        event_id = request.args.get("event_id")
+        user_id = session["user_id"]
+
+        # check if user is hosting it
+        query_hosting_an_event = "SELECT * FROM uevent WHERE host_id=%s AND event_id=%s"
+        cursor.execute(query_hosting_an_event, (user_id, event_id))
+        hosting_an_event = cursor.fetchone()
+
+        query_all_interest_types = "CALL GetAllInterestTypes()"
+        cursor.execute(query_all_interest_types)
+        interests = cursor.fetchall()
+        interests.remove({"interest_type": hosting_an_event.get("interest_type")})
+        interests.insert(0, {"interest_type": hosting_an_event.get("interest_type")})
+
+        if hosting_an_event:
+            return render_template("update_event.html", hosting_an_event=hosting_an_event, interests=interests)
+        else:
+            return redirect(url_for("events_bp.events"))
+
+
+    return redirect(url_for("events_bp.events"))
+
 @events_bp.route("/event_attended_by")
 def event_attendies():
     user_id = session["user_id"]
     event_id = request.args.get("event_id")
     print("event id: " + event_id)
+    is_issue_already_raised = False
+    issue = {}
     with db.cursor() as cursor:
         query = "SELECT * FROM Attended_by WHERE event_id=%s AND user_id=%s"
         cursor.execute(query, (event_id, user_id))
@@ -147,7 +209,8 @@ def event_attendies():
             host = cursor.fetchone()
             host_name = host.get("first_name") + " " + host.get("last_name")
     return render_template("event_carpool_allow_register.html", event=event, host_name=host_name,
-                           already_registered=already_registered)
+                           already_registered=already_registered, is_issue_already_raised=is_issue_already_raised,
+                           issue=issue)
 
 
 @events_bp.route("/create_event")
