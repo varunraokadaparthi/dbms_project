@@ -34,7 +34,7 @@
         {% set image_path = url_for('static', filename="images/"+event.interest_type+".png") %}
         <img class="card-img-top" height="200" width="200" src="{{ image_path }}"
              alt="Image not found"
-             onerror="this.src= '{{ url_for('static', filename="images/none.png") }}'">
+             onerror="this.src= '{{ url_for('static', filename=" images/none.png") }}'">
         <div class="card-body">
             <h1 class="card-title"> {{ event.title }}</h1>
             <p class="card-text">{{ event.agenda }}</p>
@@ -54,14 +54,46 @@
     <script type="text/javascript">
         var element = document.getElementById("already_registered");
         var already_registered = "{{ already_registered }}";
-        var already_joined_carpool = "{{ already_joined_carpool }}";
+        var is_issue_already_raised = "{{ is_issue_already_raised }}";
         var content;
         if (already_registered == "True") {
             console.log("True")
             content = '<h1>Already Registered</h1>' +
                 '<br>' +
                 '<a class="btn btn-outline-dark" href="/carpooling_event/{{ event.event_id }}">Carpool</a>';
+            // console.log("Hello" + issue);
+            if (is_issue_already_raised == "True") {
+                content += '<h1 class="badge badge-warning">_________________________________________________________________________Issue Raised________________________________________________________________________</h1>' +
+                    '<br>' +
+                    `<ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Ticket ID </th>
+                <th> Issue Description </th>
+                <th> Issue Time</th>
+                <th> Event ID</th>
+                <th> Emp ID</th>
+                <th></th>
+            </tr>
+            </thead>
+                <tr>
+                    <td>{{ issue.ticket_id }}</td>
+                    <td>{{ issue.issue_description }}</td>
+                    <td>{{ issue.issue_time }}</td>
+                    <td>{{ issue.event_id }}</td>
+                    <td>{{ issue.emp_id }}</td>
+                </tr>
+            </tbody>
+        </table>`
             } else {
+                content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-dark" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
+            }
+
+
+        } else {
             console.log("False")
             content =
                 '<a class="btn btn-outline-dark" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>';
