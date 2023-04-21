@@ -84,9 +84,19 @@ def event():
             query_carpools_user = "SELECT * FROM joins WHERE carpool_id=%s AND user_id=%s"
             cursor.execute(query_carpools_user, (carpool.get("carpool_id"), user_id))
             carpool_user = cursor.fetchone()
-            if cursor.fetchone():
+            if carpool_user:
                 user_joined_carpool = carpool_user.get("carpool_id")
                 break
+
+        is_issue_already_raised = False
+        # check if user already raised any issue.
+        query_issue_for_this_event = "SELECT * FROM event_issue WHERE event_id = %s AND user_id =%s"
+        cursor.execute(query_issue_for_this_event, (event_id, user_id))
+        issue = cursor.fetchone()
+        if issue:
+            is_issue_already_raised = True
+
+
         if user_joined_carpool:
             query_get_carpool = "SELECT * FROM carpool WHERE carpool_id=%s"
             cursor.execute(query_get_carpool, user_joined_carpool)
@@ -102,11 +112,12 @@ def event():
             cursor.execute(query_get_vehicle, (carpool.get("vehicle_id"), carpool.get("user_id")))
             vehicle = cursor.fetchone()
             carpool["vehicle_type"] = vehicle.get("vehicle_type")
+
             return render_template("event_carpool_dont_register.html", event=event, host_name=host_name,
-                                   already_registered=already_registered, carpool=carpool)
+                                   already_registered=already_registered, carpool=carpool, is_issue_already_raised=is_issue_already_raised, issue=issue)
         else:
             return render_template("event_carpool_allow_register.html", event=event, host_name=host_name,
-                                   already_registered=already_registered)
+                                   already_registered=already_registered,is_issue_already_raised=is_issue_already_raised, issue=issue)
 
 @events_bp.route("/event_attended_by")
 def event_attendies():
