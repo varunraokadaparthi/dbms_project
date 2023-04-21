@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin_style.css') }}">
+
+</head>
+<body>
+<br>
+<br>
+<div class="login-page">
+    <div class="form">
+        <form action="/admin_login_after_submission" class="login-form" method="POST">
+            <center><h1 style="color:rgb(137, 190, 105);">Admin Login</h1></center>
+          <center><h4 style="color:rgb(137, 190, 105);">Authorized Usage Only</h4></center>
+            <input type="text" name="username" placeholder="username"/>
+            <input type="password" name="password" placeholder="password"/>
+            <button>login</button>
+            <p class="message">You User? <a href="/">User Login</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

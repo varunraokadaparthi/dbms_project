@@ -14,8 +14,9 @@ def login():
     password = "password123"
     with db.cursor() as cursor:
         # query the database for the username and password
-        query = "SELECT * FROM NUser WHERE username=%s AND upassword=%s"
-        cursor.execute(query, (username, password))
+        # query_user_login = "SELECT * FROM NUser WHERE username=%s AND upassword=%s"
+        query_user_login = "CALL UserLogin(%s, %s)"
+        cursor.execute(query_user_login, (username, password))
         user = cursor.fetchone()
 
         if user:

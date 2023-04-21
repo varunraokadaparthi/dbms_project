@@ -19,8 +19,8 @@ def carpooling_tab_helper():
         carpool_hosting_list = cursor.fetchall()
 
         for carpool in carpool_hosting_list:
-            query_get_vehicle = "SELECT * FROM vehicle WHERE vehicle_id=%s AND user_id=%s"
-            cursor.execute(query_get_vehicle, (carpool.get("vehicle_id"), user_id))
+            query_get_vehicle = "SELECT * FROM vehicle WHERE vehicle_id=%s"
+            cursor.execute(query_get_vehicle, (carpool.get("vehicle_id")))
             vehicle = cursor.fetchone()
             carpool["vehicle_type"] = vehicle.get("vehicle_type")
 

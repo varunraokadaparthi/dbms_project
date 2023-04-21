@@ -34,7 +34,7 @@
     text-transform: uppercase;
     outline: 0;
     /* background: rgb(137, 190, 105); */
-    background: #5434af;
+    background: #8234af;
     width: 100%;
     border: 0;
     padding: 15px;
@@ -105,11 +105,11 @@
 }
 
 body {
-    background: #73b64e; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #73b64e, rgb(137, 190, 105));
-    background: -moz-linear-gradient(right, #73b64e, rgb(137, 190, 105));
-    background: -o-linear-gradient(right, #73b64e, rgb(137, 190, 105));
-    background: linear-gradient(to left, #73b64e, rgb(137, 190, 105));
+    background: #7b2cbf; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom left, #7b2cbf, #3c1874);
+    background: -moz-linear-gradient(to bottom left, #7b2cbf, #3c1874);
+    background: -o-linear-gradient(to bottom left, #7b2cbf, #3c1874);
+    background: linear-gradient(to bottom left, #7b2cbf, #3c1874);
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
