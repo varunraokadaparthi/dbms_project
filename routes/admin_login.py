@@ -12,8 +12,10 @@ def admin_login():
 
 @admin_login_bp.route("/admin_login_after_submission",methods=["POST"])
 def after_submission():
-    username = "CS004"
-    password = "passwordabc"
+    # username = "CS004"
+    # password = "passwordabc"
+    username = request.form["username"]
+    password = request.form["password"]
     with db.cursor() as cursor:
         # query the database for the username and password
         # query_admin_login = "SELECT * FROM customer_support WHERE emp_id=%s AND emp_password=%s"

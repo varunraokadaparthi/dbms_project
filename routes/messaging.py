@@ -20,14 +20,16 @@ def messaging():
             friends_list.append(cursor.fetchone())
 
         friends_list_id = [item.get("id") for item in friends_list]
-
-        # get all people who's interest are of user_id.
-        query_user_interest = "CALL GetUsersWithSimilarInterests(%s)"
-        cursor.execute(query_user_interest, user_id)
-        user_events_interest = cursor.fetchall()
         user_of_same_interests = []
-        for user_id_interest in user_events_interest:
-            user_of_same_interests.append(user_id_interest.get("user_id"))
+        # get all people who's interest are of user_id.
+        try:
+            query_user_interest = "CALL GetUsersWithSimilarInterests(%s)"
+            cursor.execute(query_user_interest, user_id)
+            user_events_interest = cursor.fetchall()
+            for user_id_interest in user_events_interest:
+                user_of_same_interests.append(user_id_interest.get("user_id"))
+        except pymysql.Error as e:
+            print(e)
 
         user_joined_hosted_by_user = []
         #get all the people in carpool which were hosted by the user
