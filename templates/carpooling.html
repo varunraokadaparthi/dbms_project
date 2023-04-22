@@ -28,7 +28,8 @@
 </nav>
 
 <div class="container">
-    <h1 class="badge badge-info">___________________________________________________________________________HOSTING_________________________________________________________________________</h1>
+    <h1 class="badge badge-info">
+        ___________________________________________________________________________HOSTING_________________________________________________________________________</h1>
     <ul class="list-group list-group-flush">
         <table>
             <thead>
@@ -84,6 +85,11 @@
                     <td>{{ carpool.pickup_zipcode }}</td>
                     <td>{{ carpool.vehicle_type }}</td>
                     <td>{{ carpool.price }}</td>
+                    <td>
+                        <form method="post" action="/carpool_cancel_ride?carpool_id={{ carpool.carpool_id }}">
+                            <button type="submit" class="btn btn-warning btn-md">Cancel Ride</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,6 +1,6 @@
 from flask import Flask, session, render_template, request, redirect, url_for, Blueprint
 from db import db
-
+import copy
 profile_bp = Blueprint("profile_bp", __name__)
 
 
@@ -22,6 +22,12 @@ def profile():
         query_get_all_vehicle_types = "CALL GetAllVehicleTypes()"
         cursor.execute(query_get_all_vehicle_types)
         vehicle_types = cursor.fetchall()
+
+        for vehicle in vehicles:
+            vehicle_types_copy = copy.deepcopy(vehicle_types)
+            vehicle_types_copy.remove({"vehicle_type": vehicle.get("vehicle_type")})
+            vehicle_types_copy.insert(0, {"vehicle_type": vehicle.get("vehicle_type")})
+            vehicle["vehicle_types"] = vehicle_types_copy
 
         # query_user_interest_types = "SELECT * FROM user_interest WHERE user_id=%s"
         query_user_interest_types = "CALL GetUserInterestTypes(%s)"
