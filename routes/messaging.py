@@ -119,11 +119,14 @@ def add_friend():
 def chat(friend_id):
     user_id = session["user_id"]
     with db.cursor() as cursor:
-        # TODO: query_messages
+        unsorted_messages = []
         # query_messages = "SELECT * FROM messages WHERE sender_id IN (%s, %s) AND receiver_id IN (%s, %s)"
-        query_messages = "CALL GetMessages(%s, %s)"
-        cursor.execute(query_messages, (user_id, friend_id))
-        unsorted_messages = cursor.fetchall()
+        try:
+            query_messages = "CALL GetMessages(%s, %s)"
+            cursor.execute(query_messages, (user_id, friend_id))
+            unsorted_messages = cursor.fetchall()
+        except pymysql.Error as e:
+            print(e)
     sorted_messages = sorted(unsorted_messages, key=lambda x: x["sent_at"])
     return render_template("chat.html", messsages=sorted_messages, friend_id=friend_id, user_id=user_id)
 
