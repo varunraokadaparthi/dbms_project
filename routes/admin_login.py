@@ -16,8 +16,9 @@ def after_submission():
     password = "passwordabc"
     with db.cursor() as cursor:
         # query the database for the username and password
-        query = "SELECT * FROM customer_support WHERE emp_id=%s AND emp_password=%s"
-        cursor.execute(query, (username, password))
+        # query_admin_login = "SELECT * FROM customer_support WHERE emp_id=%s AND emp_password=%s"
+        query_admin_login = "CALL admin_login_proc(%s, %s)"
+        cursor.execute(query_admin_login, (username, password))
         user = cursor.fetchone()
 
         if user:

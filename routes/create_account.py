@@ -23,7 +23,8 @@ def create_account_post():
     with db.cursor() as cursor:
         # check if the username already exists
         # TODO:
-        query_get_user_by_username = "SELECT * FROM NUser WHERE username=%s"
+        # query_get_user_by_username = "SELECT * FROM NUser WHERE username=%s"
+        query_get_user_by_username = "CALL UserByUsername(%s)"
         cursor.execute(query_get_user_by_username, (username))
         user = cursor.fetchone()
 

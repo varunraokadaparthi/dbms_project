@@ -20,8 +20,9 @@ def interest_add():
     interest_type = request.form["interest_type"]
     with db.cursor() as cursor:
         # TODO:
-        query_add_interest = "INSERT INTO user_interest(user_id, interest_type) " \
-                               "VALUES(%s, %s) "
+        # query_add_interest = "INSERT INTO user_interest(user_id, interest_type) " \
+        #                        "VALUES(%s, %s) "
+        query_add_interest = "CALL AddInterest(%s, %s)"
         cursor.execute(query_add_interest, (user_id, interest_type))
         db.commit()
     return redirect(url_for("profile_bp.profile"))
