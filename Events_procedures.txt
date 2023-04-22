@@ -1,0 +1,43 @@
+-- user login
+SELECT * FROM NUser WHERE username=%s AND upassword=%s
+
+-- get user details
+SELECT * FROM nuser WHERE id=%s
+
+
+-- uevent CRUD operations
+
+-- Get user hosting events
+SELECT * FROM User_Event WHERE user_id=%s
+
+-- Get Event
+SELECT * FROM UEvent WHERE event_id=%s
+
+-- Events user is attending
+SELECT * FROM attended_by WHERE user_id=%s
+for event in user_attending_events:
+    SELECT * FROM UEvent WHERE event_id=%s
+
+-- Get All Events
+SELECT * FROM UEvent
+
+-- Get user interests
+SELECT * FROM user_interest WHERE user_id = %s
+
+-- Get All interests
+SELECT * FROM interest
+
+-- User already registered for an event?
+SELECT * FROM Attended_by WHERE event_id=%s AND user_id=%s
+
+-- Get carpool ids for this event
+SELECT carpool_id FROM carpool WHERE event_id=%s
+
+-- Has user joined a particular carpool?
+SELECT * FROM joins WHERE carpool_id=%s AND user_id=%s
+
+-- Get carpool details
+SELECT * FROM carpool WHERE carpool_id=%s
+
+-- Get vehicle details
+SELECT * FROM vehicle WHERE vehicle_id=%s AND user_id=%s

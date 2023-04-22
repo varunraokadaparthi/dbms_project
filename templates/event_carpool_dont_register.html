@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Responsive Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/event.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav>
+    <input type="checkbox" id="check">
+    <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+    </label>
+    <label class="logo">RIVET</label>
+    <ul>
+        <li><a class="active" href="/events">Events</a></li>
+        <li><a href="/carpooling">Carpooling</a></li>
+        <li><a href="/messaging">Messaging</a></li>
+        <li><a href="/profile">{{ session.username }}</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Event</h1>
+    <!-- add your dashboard content here -->
+    <div class="card mx-auto">
+        {% set image_path = url_for('static', filename="images/"+event.interest_type+".png") %}
+        <img class="card-img-top" height="200" width="200" src="{{ image_path }}"
+             alt="Image not found"
+             onerror="this.src= '{{ url_for('static', filename=" images/none.png") }}'">
+        <div class="card-body">
+            <h1 class="card-title"> {{ event.title }}</h1>
+            <p class="card-text">{{ event.agenda }}</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Location: {{ event.street_name }} {{ event.city }} {{ event.zip_code }}</li>
+                <li class="list-group-item">Timings: {{ event.start_time }} - {{ event.end_time }}</li>
+                <li class="list-group-item">Fees: {{ event.fees }}</li>
+                <li class="list-group-item">Max People: {{ event.max_people }}</li>
+                <li class="list-group-item">Minimum Age: {{ event.min_age }}</li>
+                <li class="list-group-item">Interest Type: {{ event.interest_type }}</li>
+                <li class="list-group-item">Requirements: {{ event.requirements }}</li>
+                <li class="list-group-item">Host: {{ host_name }}</li>
+            </ul>
+        </div>
+        <p id="already_registered"></p>
+    </div>
+    <script type="text/javascript">
+        var element = document.getElementById("already_registered");
+        var already_registered = "{{ already_registered }}";
+        var is_issue_already_raised = "{{ is_issue_already_raised }}";
+        var content;
+        if (already_registered == "True") {
+            console.log("True")
+            content = '<h1 class="badge badge-info">______________________________________________________________________Already Registered_____________________________________________________________________</h1>' +
+                '<br>' +
+                `<ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Host </th>
+                <th> Host Phone No </th>
+                <th> Zip Code</th>
+                <th> Vehicle Type</th>
+                <th> Price</th>
+                <th></th>
+            </tr>
+            </thead>
+                <tr>
+                    <td>{{ carpool.user_name }}</td>
+                    <td>{{ carpool.host_phone_number }}</td>
+                    <td>{{ carpool.pickup_zipcode }}</td>
+                    <td>{{ carpool.vehicle_type }}</td>
+                    <td>{{ carpool.price }}</td>
+                </tr>
+            </tbody>
+        </table>`;
+
+            if (is_issue_already_raised == "True") {
+                content += '<h1 class="badge badge-warning">_________________________________________________________________________Issue Raised________________________________________________________________________</h1>' +
+                    '<br>' +
+                    `<ul class="list-group list-group-flush">
+        <table>
+            <thead>
+            <tr>
+                <th> Ticket ID </th>
+                <th> Issue Description </th>
+                <th> Issue Time</th>
+                <th> Event ID</th>
+                <th> Emp ID</th>
+                <th></th>
+            </tr>
+            </thead>
+                <tr>
+                    <td>{{ issue.ticket_id }}</td>
+                    <td>{{ issue.issue_description }}</td>
+                    <td>{{ issue.issue_time }}</td>
+                    <td>{{ issue.event_id }}</td>
+                    <td>{{ issue.emp_id }}</td>
+                </tr>
+            </tbody>
+        </table>`
+            } else {
+                content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-warning" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
+            }
+
+
+        } else {
+            console.log("False")
+            content =
+                '<a class="btn btn-outline-success" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>'+
+                '<a className="btn btn-outline-danger" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
+        }
+        content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-warning" href="/update_event?event_id={{ event.event_id }}">Update Event</a>';
+        content +=
+                    '<a>          </a>' +
+                    '<a class="btn btn-outline-danger" href="/delete_event?event_id={{ event.event_id }}">Delete Event</a>';
+        element.innerHTML = content;
+    </script>
+
+</div>
+</body>
+</html>

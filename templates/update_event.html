@@ -7,66 +7,92 @@
     <div class="formbold-form-wrapper">
 
 
-        <form action="/create_account" method="POST">
+        <form action="/update_event?event_id={{ hosting_an_event.event_id }}" method="POST">
             <div class="formbold-form-title">
-                <h2 class="">Create an Account</h2>
+                <h2 class="">Update an Event</h2>
                 <p>
-                    Fill the account details.
+                    Fill the details about the event.
                 </p>
+            </div>
+
+            <div class="formbold-mb-3">
+                <label for="title" class="formbold-form-label">
+                    Title
+                </label>
+                <input type="text" name="title" id="title" value="{{ hosting_an_event.title }}" class="formbold-form-input">
             </div>
 
             <div class="formbold-input-flex">
                 <div>
-                    <label for="username" class="formbold-form-label"> Username </label>
-                    <input type="text" name="username" id="username" class="formbold-form-input">
+                    <label for="start_time" class="formbold-form-label"> Start Time </label>
+                    <input type="datetime-local" name="start_time" id="start_time" value="{{ hosting_an_event.start_time }}" class="formbold-form-input">
                 </div>
                 <div>
-                    <label for="password" class="formbold-form-label"> Password </label>
-                    <input type="password" name="password" id="password" class="formbold-form-input">
+                    <label for="end_time" class="formbold-form-label"> End Time </label>
+                    <input type="datetime-local" name="end_time" id="end_time" value="{{ hosting_an_event.end_time }}" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="min_age" class="formbold-form-label"> Min Age </label>
+                    <input type="number" name="min_age" id="min_age" value="{{ hosting_an_event.min_age }}" class="formbold-form-input">
+                </div>
+                <div>
+                    <label for="max_people" class="formbold-form-label"> Max People </label>
+                    <input type="number" name="max_people" id="max_people" value="{{ hosting_an_event.max_people }}" class="formbold-form-input">
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="fees" class="formbold-form-label"> Fees </label>
+                    <input type="number" name="fees" id="fees" value="{{ hosting_an_event.fees }}" class="formbold-form-input">
+                </div>
+                <div>
+                    <label for="requirements" class="formbold-form-label"> Requirements </label>
+                    <input type="text" name="requirements" id="requirements" value="{{ hosting_an_event.requirements }}" class="formbold-form-input">
                 </div>
             </div>
 
             <div class="formbold-mb-3">
-                <label for="hint" class="formbold-form-label">
-                    Password Hint
+                <label for="street" class="formbold-form-label">
+                    Street Adress
                 </label>
-                <input type="text" name="hint" id="hint" class="formbold-form-input">
+                <input type="text" name="street" id="street" value="{{ hosting_an_event.street_name }}" class="formbold-form-input">
             </div>
 
             <div class="formbold-input-flex">
                 <div>
-                    <label for="first_name" class="formbold-form-label"> First Name </label>
-                    <input type="text" name="first_name" id="first_name" class="formbold-form-input">
+                    <label for="city" class="formbold-form-label"> City </label>
+                    <input type="text" name="city" id="city" value="{{ hosting_an_event.city }}" class="formbold-form-input">
                 </div>
                 <div>
-                    <label for="last_name" class="formbold-form-label"> Last Name </label>
-                    <input type="text" name="last_name" id="last_name" class="formbold-form-input">
-                </div>
-            </div>
-
-            <div class="formbold-input-flex">
-                <div>
-                    <label for="date_of_birth" class="formbold-form-label"> Date Of Birth </label>
-                    <input type="datetime-local" name="date_of_birth" id="date_of_birth" class="formbold-form-input">
-                </div>
-                <div>
-                    <label for="gender" class="formbold-form-label"> Gender </label>
-                    <input type="text" name="gender" id="gender" class="formbold-form-input">
+                    <label for="zipcode" class="formbold-form-label"> Zip Code </label>
+                    <input type="number" name="zipcode" id="zipcode" value="{{ hosting_an_event.zip_code }}" class="formbold-form-input">
                 </div>
             </div>
 
             <div class="formbold-input-flex">
                 <div>
-                    <label for="email_id" class="formbold-form-label"> Email ID </label>
-                    <input type="text" name="email_id" id="email_id" class="formbold-form-input">
-                </div>
-                <div>
-                    <label for="phone_number" class="formbold-form-label"> Phone Number </label>
-                    <input type="number" name="phone_number" id="phone_number" class="formbold-form-input">
+                    <label for="interest_type" class="formbold-form-label"> Interest Type </label>
+                    <select id="interest_type" name="interest_type" class="formbold-form-input">
+                        {% for interest in interests %}
+                            <option value="{{ interest.interest_type }}">{{ interest.interest_type }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
-            <button class="formbold-btn">Create Account</button>
+            <div class="formbold-mb-3">
+                <label for="agenda" class="formbold-form-label">
+                    Agenda
+                </label>
+                <input type="text" name="agenda" id="agenda" value="{{ hosting_an_event.agenda }}" class="formbold-form-input">
+            </div>
+
+
+            <button class="formbold-btn">Update Event</button>
         </form>
     </div>
 </div>

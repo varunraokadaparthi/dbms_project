@@ -7,66 +7,47 @@
     <div class="formbold-form-wrapper">
 
 
-        <form action="/create_account" method="POST">
+        <form action="/issue_submission" method="POST">
             <div class="formbold-form-title">
-                <h2 class="">Create an Account</h2>
+                <h2 class="">Tell Us The Issue</h2>
                 <p>
-                    Fill the account details.
+                    Fill the issue details.
                 </p>
             </div>
 
             <div class="formbold-input-flex">
                 <div>
-                    <label for="username" class="formbold-form-label"> Username </label>
-                    <input type="text" name="username" id="username" class="formbold-form-input">
+                    <label for="event_id" class="formbold-form-label"> Event ID </label>
+                    <input type="text" name="event_id" id="event_id" value="{{ event_id }}" readonly
+                           class="formbold-form-input">
                 </div>
                 <div>
-                    <label for="password" class="formbold-form-label"> Password </label>
-                    <input type="password" name="password" id="password" class="formbold-form-input">
+                    <label for="event_name" class="formbold-form-label"> Event Name </label>
+                    <input type="text" name="event_name" id="event_name" value="{{title}}" readonly
+                           class="formbold-form-input">
                 </div>
             </div>
 
             <div class="formbold-mb-3">
-                <label for="hint" class="formbold-form-label">
-                    Password Hint
+                <label for="issue_description" class="formbold-form-label">
+                    Description
                 </label>
-                <input type="text" name="hint" id="hint" class="formbold-form-input">
+                <input type="text" name="issue_description" id="issue_description" class="formbold-form-input">
             </div>
+
 
             <div class="formbold-input-flex">
                 <div>
-                    <label for="first_name" class="formbold-form-label"> First Name </label>
-                    <input type="text" name="first_name" id="first_name" class="formbold-form-input">
+                    <label for="emp_id" class="formbold-form-label"> Emp ID </label>
+                    <input type="text" name="emp_id" id="emp_id" value="{{ emp.emp_id }}" readonly class="formbold-form-input">
                 </div>
                 <div>
-                    <label for="last_name" class="formbold-form-label"> Last Name </label>
-                    <input type="text" name="last_name" id="last_name" class="formbold-form-input">
+                    <label for="user_id" class="formbold-form-label"> User ID </label>
+                    <input type="number" name="user_id" id="user_id" value="{{ user_id }}" readonly class="formbold-form-input">
                 </div>
             </div>
 
-            <div class="formbold-input-flex">
-                <div>
-                    <label for="date_of_birth" class="formbold-form-label"> Date Of Birth </label>
-                    <input type="datetime-local" name="date_of_birth" id="date_of_birth" class="formbold-form-input">
-                </div>
-                <div>
-                    <label for="gender" class="formbold-form-label"> Gender </label>
-                    <input type="text" name="gender" id="gender" class="formbold-form-input">
-                </div>
-            </div>
-
-            <div class="formbold-input-flex">
-                <div>
-                    <label for="email_id" class="formbold-form-label"> Email ID </label>
-                    <input type="text" name="email_id" id="email_id" class="formbold-form-input">
-                </div>
-                <div>
-                    <label for="phone_number" class="formbold-form-label"> Phone Number </label>
-                    <input type="number" name="phone_number" id="phone_number" class="formbold-form-input">
-                </div>
-            </div>
-
-            <button class="formbold-btn">Create Account</button>
+            <button class="formbold-btn">Submit Issue</button>
         </form>
     </div>
 </div>
