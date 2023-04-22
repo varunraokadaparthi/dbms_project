@@ -29,13 +29,16 @@ def messaging():
         for user_id_interest in user_events_interest:
             user_of_same_interests.append(user_id_interest.get("user_id"))
 
-        #get all the people in carpool which were hosted by the user
-        query_user_joined = "CALL GetUsersWhoJoinedUserCarpools(%s)"
-        cursor.execute(query_user_joined, user_id)
-        user_joined_user_id = cursor.fetchall()
         user_joined_hosted_by_user = []
-        for user_id_joined in user_joined_user_id:
-            user_joined_hosted_by_user.append(user_id_joined.get("user_id"))
+        #get all the people in carpool which were hosted by the user
+        try:
+            query_user_joined = "CALL GetUsersWhoJoinedUserCarpools(%s)"
+            cursor.execute(query_user_joined, user_id)
+            user_joined_user_id = cursor.fetchall()
+            for user_id_joined in user_joined_user_id:
+                user_joined_hosted_by_user.append(user_id_joined.get("user_id"))
+        except pymysql.Error as e:
+            print(e)
 
         # get all the people in carpool which user joined
         # TODO: user_hosted
@@ -56,12 +59,15 @@ def messaging():
         # TODO: users_joined_events
         # users_joined_events = "SELECT user_id FROM user_event WHERE event_id IN (SELECT event_id FROM user_event WHERE user_id = %s) AND user_id != %s;"
         # cursor.execute(users_joined_events, (user_id, user_id))
-        users_joined_events = "CALL GetUsersWhoJoinedUserEvents(%s)"
-        cursor.execute(users_joined_events, user_id)
-        users_joined_event_hosted_by_user = cursor.fetchall()
         users_joined_event_host = []
-        for user_id_hosted in users_joined_event_hosted_by_user:
-            users_joined_event_host.append(user_id_hosted.get("user_id"))
+        try:
+            users_joined_events = "CALL GetUsersWhoJoinedUserEvents(%s)"
+            cursor.execute(users_joined_events, user_id)
+            users_joined_event_hosted_by_user = cursor.fetchall()
+            for user_id_hosted in users_joined_event_hosted_by_user:
+                users_joined_event_host.append(user_id_hosted.get("user_id"))
+        except pymysql.Error as e:
+            print(e)
 
 
         # Add all the users add remove the friendList
