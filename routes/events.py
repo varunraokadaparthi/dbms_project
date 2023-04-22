@@ -188,6 +188,30 @@ def update_event():
 
     return redirect(url_for("events_bp.events"))
 
+
+@events_bp.route("/update_event", methods=["POST"])
+def update_event_post():
+    title = request.form["title"]
+    start_time = request.form["start_time"]
+    end_time = request.form["end_time"]
+    max_people = request.form["max_people"]
+    fees = request.form["fees"]
+    requirements = request.form["requirements"]
+    street = request.form["street"]
+    city = request.form["city"]
+    zipcode = request.form["zipcode"]
+    min_age = request.form["min_age"]
+    interest_type = request.form["interest_type"]
+    agenda = request.form["agenda"]
+    user_id = session["user_id"]
+    event_id = request.args.get("event_id")
+    with db.cursor() as cursor:
+        query_update_event = "CALL UpdateEventById(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(query_update_event, (event_id, start_time, end_time, max_people, fees, requirements, street, city, zipcode, min_age, title, agenda, user_id, interest_type))
+        db.commit()
+    return redirect(url_for("events_bp.event", event_id=event_id))
+
+
 @events_bp.route("/event_attended_by")
 def event_attendies():
     user_id = session["user_id"]
