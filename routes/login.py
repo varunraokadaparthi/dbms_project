@@ -7,11 +7,10 @@ login_bp = Blueprint("login_bp", __name__)
 
 @login_bp.route("/login", methods=["POST"])
 def login():
-    # username = request.form["username"]
-    # password = request.form["password"]
+    username = request.form["username"]
+    password = request.form["password"]
     # TODO: revert to above
-    username = "johndoe"
-    password = "password123"
+
     with db.cursor() as cursor:
         # query the database for the username and password
         # query_user_login = "SELECT * FROM NUser WHERE username=%s AND upassword=%s"
@@ -24,6 +23,7 @@ def login():
             session["first_name"] = user.get("first_name")
             session["last_name"] = user.get("last_name")
             session["username"] = username
+            session["app_name"] = "Rivet"
             return redirect(url_for("events_bp.events"))
         else:
             return redirect(url_for("index_bp.index"))
