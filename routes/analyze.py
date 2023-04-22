@@ -19,7 +19,7 @@ def analyze():
         user_carpool_hosted_number = cursor.fetchall()
 
         # get top interest amoung user's
-        query_top_interest = "SELECT interest_type, COUNT(*) AS num_users FROM user_interest GROUP BY interest_type ORDER BY num_users DESC LIMIT 10";
+        # query_top_interest = "SELECT interest_type, COUNT(*) AS num_users FROM user_interest GROUP BY interest_type ORDER BY num_users DESC LIMIT 10";
         query_top_interest = "CALL GetTopInterests()"
         cursor.execute(query_top_interest)
         users_top_interests = cursor.fetchall()

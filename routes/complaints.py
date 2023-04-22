@@ -7,7 +7,8 @@ complaints_bp = Blueprint("complaints_bp", __name__)
 def complaints():
     with db.cursor() as cursor:
         # get all the complaints
-        query_get_all_complaints = "SELECT * FROM event_issue"
+        # query_get_all_complaints = "SELECT * FROM event_issue"
+        query_get_all_complaints = "CALL AllComplaints()"
         cursor.execute(query_get_all_complaints)
         user_complaints = cursor.fetchall()
     return render_template("complaints.html", user_complaints=user_complaints)
@@ -19,11 +20,13 @@ def resolved():
         ticket_id = request.args.get("ticket_id")
 
         # delete the ticket_id
-        query_delete_ticket = "DELETE FROM event_issue WHERE ticket_id=%s"
+        # query_delete_ticket = "DELETE FROM event_issue WHERE ticket_id=%s"
+        query_delete_ticket = "CALL DeleteComplaint(%s)"
         cursor.execute(query_delete_ticket,ticket_id)
 
         # get all the complaints
-        query_get_all_complaints = "SELECT * FROM event_issue"
+        # query_get_all_complaints = "SELECT * FROM event_issue"
+        query_get_all_complaints = "CALL AllComplaints()"
         cursor.execute(query_get_all_complaints)
         user_complaints = cursor.fetchall()
 

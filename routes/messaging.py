@@ -84,7 +84,8 @@ def messaging():
 
         recommend_friends_names = []
         for user_id_item in other_friends_to_be_recommended_set:
-            query_for_name = "SELECT id, username FROM nuser WHERE id = %s"
+            # query_for_name = "SELECT id, username FROM nuser WHERE id = %s"
+            query_for_name = "CALL Messaging_recommendation(%s)"
             cursor.execute(query_for_name, user_id_item)
             recommend_friends_names.append(cursor.fetchone())
 
