@@ -60,7 +60,7 @@
             console.log("True")
             content = '<h1>Already Registered</h1>' +
                 '<br>' +
-                '<a class="btn btn-outline-dark" href="/carpooling_event/{{ event.event_id }}">Carpool</a>';
+                '<a class="btn btn-outline-success" href="/carpooling_event/{{ event.event_id }}">Carpool</a>';
             // console.log("Hello" + issue);
             if (is_issue_already_raised == "True") {
                 content += '<h1 class="badge badge-warning">_________________________________________________________________________Issue Raised________________________________________________________________________</h1>' +
@@ -89,21 +89,21 @@
             } else {
                 content +=
                     '<a>          </a>' +
-                    '<a class="btn btn-outline-dark" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
+                    '<a class="btn btn-outline-danger" href="/issue_event?event_id={{ event.event_id }}">Raise An Issue</a>';
             }
 
 
         } else {
             console.log("False")
             content =
-                '<a class="btn btn-outline-dark" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>';
+                '<a class="btn btn-outline-success" href="/event_attended_by?event_id={{ event.event_id }}">Attend</a>';
         }
         content +=
                     '<a>          </a>' +
-                    '<a class="btn btn-outline-dark" href="/update_event?event_id={{ event.event_id }}">Update Event</a>';
+                    '<a class="btn btn-outline-warning" href="/update_event?event_id={{ event.event_id }}">Update Event</a>';
         content +=
                     '<a>          </a>' +
-                    '<a class="btn btn-outline-dark" href="/delete_event?event_id={{ event.event_id }}">Delete Event</a>';
+                    '<a class="btn btn-outline-danger" href="/delete_event?event_id={{ event.event_id }}">Delete Event</a>';
         element.innerHTML = content;
     </script>
 </div>

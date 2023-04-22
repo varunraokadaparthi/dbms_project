@@ -111,7 +111,7 @@
                                    value="{{ vehicle.registration_no }}"></td>
                         <td>
                             <select id="vehicle_type" name="vehicle_type" class="formbold-form-input">
-                                {% for vehicle_type in vehicle_types %}
+                                {% for vehicle_type in vehicle.vehicle_types %}
                                     <option value="{{ vehicle_type.vehicle_type }}">{{ vehicle_type.vehicle_type }}</option>
                                 {% endfor %}
                             </select>
